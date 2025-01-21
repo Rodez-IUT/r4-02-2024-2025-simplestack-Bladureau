@@ -3,7 +3,7 @@ package org.example;
 /**
  * Interface describing behaviour of a stack
  */
-public interface Stack {
+public interface Stack<T> {
 
     /**
      * Tests if this stack is empty
@@ -19,7 +19,7 @@ public interface Stack {
      * Pushes an item onto the top of this stack.
      * null item is allowed.
      */
-    void push(Item item);
+    void push(T item);
 
     /**
      * Looks at the object at the top of this stack without removing it from the stack.

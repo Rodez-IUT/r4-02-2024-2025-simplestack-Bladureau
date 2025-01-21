@@ -1,22 +1,21 @@
 package org.example;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayName("Test behaviour of a SimpleStack")
-class SimpleStackTest {
+class SimpleStackTest<T> {
 
     @Test
     @DisplayName("Test the state of a newly created slack")
     public void testCreateEmptyStack() { // Test case
 
-        // When a freshly stack is created
-        Stack stack = new SimpleStack();
+        // Given an empty stack, When is created it's empty
+        Stack<T> stack = new SimpleStack<>();
 
-        // Then… (oracle)
+        // Then we look if the stack is empty
         assertTrue(stack.isEmpty(), "A new stack must be empty");
         assertEquals( 0, stack.getSize(), "A new stack has no element");
     }
@@ -26,26 +25,26 @@ class SimpleStackTest {
     public void testPush() throws EmptyStackException {
 
         // Given an empty stack and an item
-        Stack stack = new SimpleStack();
-        Item item = new SimpleItem();
+        Stack<T> stack = new SimpleStack<>();
+        T item = (T) new SimpleItem();
 
         // When the item is pushed in the stack
         stack.push(item);
 
         // Then…
         assertFalse(stack.isEmpty(), "The stack must not be empty");
-        assertEquals(1, stack.getSize(),"The stack must constain 1 item");
+        assertEquals(1, stack.getSize(),"The stack must contain 1 item");
         assertSame( item, stack.peek(),"The pushed item must be is on top of the stack");
 
         // Given a new item to add
         Item item2 = new SimpleItem();
 
         // When we add the new item
-        stack.push(item2);
+        stack.push((T) item2);
 
-        // then...
+        // Then...
         assertFalse(stack.isEmpty(), "The stack must be not empty");
-        assertEquals(2, stack.getSize(),"The stack must constain 2 items");
+        assertEquals(2, stack.getSize(),"The stack must contain 2 items");
         assertSame( item2, stack.peek(),"The pushed item must be on top of the stack");
     }
 
@@ -53,31 +52,32 @@ class SimpleStackTest {
     @DisplayName("Test limit when trying to pop an empty stack")
     public void testPopOnEmptyStack()  {
         // Given an empty stack
-        Stack stack = new SimpleStack();
+        Stack<T> stack = new SimpleStack<>();
 
-        // When we "pop" the stack, should throws an EmptyStackException.
+        // When we "pop" the stack, should throw an EmptyStackException.
         //assertThrows(EmptyStackException.class, ()->stack.pop(), "EmptyStackException not thrown");
         assertThrows(EmptyStackException.class, stack::pop, "EmptyStackException not thrown");
     }
 
     @Test
-    @DisplayName("Test limit when trying to pop an empty stack")
+    @DisplayName("Test when tring to pop a stack with an item inside")
     public void testPop() throws EmptyStackException {
-        // Given an empty stack
-        Stack stack = new SimpleStack();
+        // Given an empty stack and an item
+        Stack<T> stack = new SimpleStack<>();
         Item item = new SimpleItem();
 
         // When the item is pushed in the stack
-        stack.push(item);
+        stack.push((T) item);
 
         // Then…
         assertFalse(stack.isEmpty(), "The stack must not be empty");
-        assertEquals(1, stack.getSize(),"The stack must constain 1 item");
+        assertEquals(1, stack.getSize(),"The stack must contain 1 item");
         assertSame( item, stack.peek(),"The pushed item must be is on top of the stack");
 
-        // On enleve l'item précédemment inséré
+        // When the item is removed
         stack.pop();
 
+        // Then we verified if the stack is empty.
         assertTrue(stack.isEmpty(), "The stack is empty");
     }
 }

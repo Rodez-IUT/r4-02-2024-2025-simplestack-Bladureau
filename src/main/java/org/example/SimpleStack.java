@@ -1,15 +1,22 @@
 package org.example;
+
 import java.util.ArrayList;
+import java.util.List;
 
-public class SimpleStack implements Stack {
+public class SimpleStack<T> implements Stack<T> {
 
-    ArrayList<Item> listeItem = new ArrayList<Item>();
+    private final List<T> items;
+
+    public SimpleStack() {
+        this.items = new ArrayList<>();
+    }
+
     /**
      * Tests if this stack is empty
      */
     @Override
     public boolean isEmpty() {
-        return this.getSize() == 0;
+        return items.isEmpty();
     }
 
     /**
@@ -17,7 +24,7 @@ public class SimpleStack implements Stack {
      */
     @Override
     public int getSize() {
-        return listeItem.size();
+        return items.size();
     }
 
     /**
@@ -27,8 +34,8 @@ public class SimpleStack implements Stack {
      * @param item an item of the stack
      */
     @Override
-    public void push(Item item) {
-        listeItem.add(item);
+    public void push(T item) {
+        items.add(item);
     }
 
     /**
@@ -36,7 +43,10 @@ public class SimpleStack implements Stack {
      */
     @Override
     public Item peek() throws EmptyStackException {
-        return listeItem.get(getSize() - 1);
+        if (isEmpty()) {
+            throw new EmptyStackException();
+        }
+        return (Item) items.get(getSize() - 1);
     }
 
     /**
@@ -47,9 +57,9 @@ public class SimpleStack implements Stack {
      */
     @Override
     public Item pop() throws EmptyStackException {
-        if (listeItem.isEmpty()) {
+        if (isEmpty()) {
             throw new EmptyStackException();
         }
-        return listeItem.remove(getSize()-1);
+        return (Item) items.remove(getSize() - 1);
     }
 }
