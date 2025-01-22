@@ -37,10 +37,10 @@ class SimpleStackTest<T> {
         assertSame( item, stack.peek(),"The pushed item must be is on top of the stack");
 
         // Given a new item to add
-        Item item2 = new SimpleItem();
+        T item2 = (T) new SimpleItem();
 
         // When we add the new item
-        stack.push((T) item2);
+        stack.push(item2);
 
         // Then...
         assertFalse(stack.isEmpty(), "The stack must be not empty");
@@ -64,10 +64,10 @@ class SimpleStackTest<T> {
     public void testPop() throws EmptyStackException {
         // Given an empty stack and an item
         Stack<T> stack = new SimpleStack<>();
-        Item item = new SimpleItem();
+        T item = (T) new SimpleItem();
 
         // When the item is pushed in the stack
-        stack.push((T) item);
+        stack.push(item);
 
         // Then…
         assertFalse(stack.isEmpty(), "The stack must not be empty");
