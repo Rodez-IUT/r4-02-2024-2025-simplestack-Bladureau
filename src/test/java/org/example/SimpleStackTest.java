@@ -13,7 +13,7 @@ class SimpleStackTest<T> {
     public void testCreateEmptyStack() { // Test case
 
         // Given an empty stack, When is created it's empty
-        Stack<T> stack = new SimpleStack<>();
+        Stack<T> stack = new SimpleStack<T>();
 
         // Then we look if the stack is empty
         assertTrue(stack.isEmpty(), "A new stack must be empty");
@@ -21,11 +21,22 @@ class SimpleStackTest<T> {
     }
 
     @Test
+    @DisplayName("Test limit when trying to peek an empty stack")
+    public void testPeekOnEmptyStack() throws EmptyStackException {
+        // Given an empty stack
+        Stack<T> stack = new SimpleStack<T>();
+
+        // When we "pop" the stack, should throw an EmptyStackException.
+        //assertThrows(EmptyStackException.class, ()->stack.pop(), "EmptyStackException not thrown");
+        assertThrows(EmptyStackException.class, stack::peek, "EmptyStackException not thrown");
+    }
+
+    @Test
     @DisplayName("Test the push of items")
     public void testPush() throws EmptyStackException {
 
         // Given an empty stack and an item
-        Stack<T> stack = new SimpleStack<>();
+        Stack<T> stack = new SimpleStack<T>();
         T item = (T) new SimpleItem();
 
         // When the item is pushed in the stack
@@ -52,7 +63,7 @@ class SimpleStackTest<T> {
     @DisplayName("Test limit when trying to pop an empty stack")
     public void testPopOnEmptyStack()  {
         // Given an empty stack
-        Stack<T> stack = new SimpleStack<>();
+        Stack<T> stack = new SimpleStack<T>();
 
         // When we "pop" the stack, should throw an EmptyStackException.
         //assertThrows(EmptyStackException.class, ()->stack.pop(), "EmptyStackException not thrown");
@@ -63,7 +74,7 @@ class SimpleStackTest<T> {
     @DisplayName("Test when tring to pop a stack with an item inside")
     public void testPop() throws EmptyStackException {
         // Given an empty stack and an item
-        Stack<T> stack = new SimpleStack<>();
+        Stack<T> stack = new SimpleStack<T>();
         T item = (T) new SimpleItem();
 
         // When the item is pushed in the stack
